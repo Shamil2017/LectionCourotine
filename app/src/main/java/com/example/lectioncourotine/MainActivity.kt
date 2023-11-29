@@ -7,14 +7,15 @@ import androidx.core.view.isVisible
 import com.example.lectioncourotine.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityMainBinding
 
-    private val binding by lazy {
-        ActivityMainBinding.inflate(layoutInflater)
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
         binding.buttonLoad.setOnClickListener {
             loadData()
         }
