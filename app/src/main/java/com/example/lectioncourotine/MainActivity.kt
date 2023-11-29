@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
     private fun loadCity(callback: (String) -> Unit) {
         thread {
             Thread.sleep(5000)
-            Handler(Looper.getMainLooper()).post {
+            runOnUiThread {
                 callback.invoke("Moscow")
             }
 
@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadTemperature(city: String, callback: (Int) -> Unit) {
         thread {
-            Handler(Looper.getMainLooper()).post {
+            runOnUiThread{
                 Toast.makeText(
                     this,
                     getString(R.string.loading_temperature_toast, city),
@@ -57,7 +57,7 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
             Thread.sleep(5000)
-            Handler(Looper.getMainLooper()).post {
+            runOnUiThread {
                 callback.invoke(17)
             }
 
