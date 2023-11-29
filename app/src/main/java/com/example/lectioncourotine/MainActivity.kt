@@ -2,6 +2,7 @@ package com.example.lectioncourotine
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.widget.Toast
 import androidx.core.view.isVisible
 import com.example.lectioncourotine.databinding.ActivityMainBinding
@@ -10,6 +11,7 @@ import kotlin.concurrent.thread
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,19 +40,27 @@ class MainActivity : AppCompatActivity() {
     private fun loadCity(callback: (String) -> Unit) {
         thread {
             Thread.sleep(5000)
-            callback.invoke("Moscow")
+            handler.post {
+                callback.invoke("Moscow")
+            }
+
         }
     }
 
     private fun loadTemperature(city: String, callback: (Int) -> Unit) {
         thread {
-            Toast.makeText(
-                this,
-                getString(R.string.loading_temperature_toast, city),
-                Toast.LENGTH_SHORT
-            ).show()
+            handler.post {
+                Toast.makeText(
+                    this,
+                    getString(R.string.loading_temperature_toast, city),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
             Thread.sleep(5000)
-            callback.invoke(17)
+            handler.post {
+                callback.invoke(17)
+            }
+
         }
     }
 }
